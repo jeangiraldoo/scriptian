@@ -55,7 +55,7 @@ jobs:
     needs: compile-binaries
     runs-on: ubuntu-latest
     steps:
-      uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
       - name: Download binaries
         uses: actions/download-artifact@v4
@@ -75,4 +75,4 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           find dist -type f
-          gh release upload ${{ steps.release.outputs.tag_name }} dist/*/* --clobber
+          gh release upload ${{ steps.release-please.outputs.tag_name }} dist/*/* --clobber
