@@ -72,5 +72,5 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          ls -lh dist/
-          gh release upload ${{ steps.release.outputs.tag_name }} dist/${{ env.BIN_NAME }}-* --clobber
+          find dist -type f
+          gh release upload ${{ steps.release.outputs.tag_name }} dist/*/* --clobber
