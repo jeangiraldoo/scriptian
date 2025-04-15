@@ -12,13 +12,63 @@ permissions:
   pull-requests: write
 
 jobs:
-  release-please:
-    runs-on: ubuntu-latest
+  compile-binaries:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    env:
+      BIN_NAME: script
     steps:
       - uses: actions/checkout@v4
 
+      - name: Install Rust
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          override: true
+
+      - name: Compile binary
+        run: |
+          cargo build --release
+
+      - name: Rename binary
+        run: |
+          EXT=""
+          if [[ ${{ matrix.os }} == "Windows" ]]; then
+            EXT=".exe"
+          fi
+
+          mv target/release/${{ env.BIN_NAME }}$EXT target/release/${{ env.BIN_NAME }}-${{ matrix.os }}$EXT
+
+      - name: Upload binary
+        uses: actions/upload-artifact@v4
+        with:
+          name: binaries
+          path: target/release/
+
+  release:
+    name: Create release
+    needs: compile-binaries
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download binaries
+        uses: actions/download-artifact@v4
+        with:
+          name: binaries
+          path: target/release/
+
       - name: Run Release Please
+        id: release-please
         uses: googleapis/release-please-action@v4
         with:
           token: ${{ secrets.RELEASE_PLEASE_SECRET }}
           release-type: rust
+
+      - name: Upload Release Artifact
+        if: ${{ steps.release-please.outputs.release_created }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          ls -lh target/release/
+          gh release upload ${{ steps.release.outputs.tag_name }} target/release/${{ env.BIN_NAME }}-* --clobber
