@@ -39,13 +39,14 @@ jobs:
             EXT=".exe"
           fi
 
-          mv target/release/${{ env.BIN_NAME }}$EXT target/release/${{ env.BIN_NAME }}-${{ matrix.os }}$EXT
+          mkdir -p dist
+          cp target/release/${{ env.BIN_NAME }}$EXT dist/${{ env.BIN_NAME }}-${{ runner.os }}$EXT
 
       - name: Upload binary
         uses: actions/upload-artifact@v4
         with:
           name: binaries
-          path: target/release/
+          path: dist/
 
   release:
     name: Create release
@@ -56,7 +57,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: binaries
-          path: target/release/
+          path: dist/
 
       - name: Run Release Please
         id: release-please
@@ -70,5 +71,5 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          ls -lh target/release/
-          gh release upload ${{ steps.release.outputs.tag_name }} target/release/${{ env.BIN_NAME }}-* --clobber
+          ls -lh dist/
+          gh release upload ${{ steps.release.outputs.tag_name }} dist/${{ env.BIN_NAME }}-* --clobber
