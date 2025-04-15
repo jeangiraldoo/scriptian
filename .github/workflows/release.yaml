@@ -34,6 +34,7 @@ jobs:
           cargo build --release
 
       - name: Rename binary
+        shell: bash
         run: |
           EXT=""
           if [[ ${{ matrix.os }} == "Windows" ]]; then
