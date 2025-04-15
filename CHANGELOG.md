@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.5.0](https://github.com/jeangiraldoo/scriptian/compare/v0.4.0...v0.5.0) (2025-04-15)
+
+
+### Features
+
+* lol ([e188f09](https://github.com/jeangiraldoo/scriptian/commit/e188f09f499c56e795ca0beea5ee0e6267d9a2f1))
+* sighs ([e99062d](https://github.com/jeangiraldoo/scriptian/commit/e99062d9e521cbbf72798f07a44d0d00fbfb8d52))
+
 ## [0.4.0](https://github.com/jeangiraldoo/scriptian/compare/v0.3.0...v0.4.0) (2025-04-15)
 
 
