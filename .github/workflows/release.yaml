@@ -63,23 +63,22 @@ jobs:
       - name: Package the binary
         run: |
           EXT=$([[ ${{ matrix.os }} == "windows-latest" ]] && printf ".exe" || printf "")
+          ARCH=""
+
+          case "${{ matrix.target }}" in
+            x86_64-unknown-linux-gnu)    ARCH="linux-x64" ;;
+            aarch64-unknown-linux-gnu)   ARCH="linux-arm64" ;;
+            x86_64-pc-windows-gnu)      ARCH="windows-x64" ;;
+            x86_64-apple-darwin)         ARCH="macos-x64" ;;
+            aarch64-apple-darwin)        ARCH="macos-arm64" ;;
+            *) echo "Unknown target"; exit 1 ;;
+          esac
 
           mkdir -p dist
-          zip -j dist/${{ env.APP_NAME }}-${{ matrix.target }}.zip \
+          zip -j dist/${{ env.APP_NAME }}-$ARCH.zip \
                  README.md \
                  LICENSE \
                  target/release/${{ env.BIN_NAME }}$EXT
-
-      # - name: Rename binary
-      #   shell: bash
-      #   run: |
-      #     EXT=""
-      #     if [[ ${{ matrix.os }} == "Windows" ]]; then
-      #       EXT=".exe"
-      #     fi
-      #
-      #     mkdir -p dist
-      #     cp target/release/${{ env.BIN_NAME }}$EXT dist/${{ env.BIN_NAME }}-${{ runner.os }}$EXT
 
       - name: Upload binary
         uses: actions/upload-artifact@v4
