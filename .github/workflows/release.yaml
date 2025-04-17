@@ -41,13 +41,13 @@ jobs:
       - name: Package the binary
         shell: bash
         run: |
-          EXT=$([[ ${{ matrix.os }} == "Windows" ]] && printf ".exe" || printf "")
+          EXT=$([[ ${{ matrix.os }} == "windows-latest" ]] && printf ".exe" || printf "")
 
           mkdir -p dist
           zip -j dist/${{ env.BIN_NAME }}-${{ matrix.os }}.zip \
                  README.md \
                  LICENSE \
-                 target/release/${{ env.BIN_NAME }}$EXT
+                 target/release/${{ env.APP_NAME }}$EXT
 
       # - name: Rename binary
       #   shell: bash
