@@ -13,6 +13,9 @@ permissions:
 
 jobs:
   compile-binaries:
+    defaults:
+      run:
+        shell: bash
     strategy:
       matrix:
         include:
@@ -58,7 +61,6 @@ jobs:
           fi
 
       - name: Package the binary
-        shell: bash
         run: |
           EXT=$([[ ${{ matrix.os }} == "windows-latest" ]] && printf ".exe" || printf "")
 
