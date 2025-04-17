@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.9.0](https://github.com/jeangiraldoo/scriptian/compare/v0.8.0...v0.9.0) (2025-04-17)
+
+
+### Features
+
+* final ([d7a0b44](https://github.com/jeangiraldoo/scriptian/commit/d7a0b44617037fefa5f2a18a83d089e496a45768))
+
 ## [0.8.0](https://github.com/jeangiraldoo/scriptian/compare/v0.7.0...v0.8.0) (2025-04-17)
 
 
