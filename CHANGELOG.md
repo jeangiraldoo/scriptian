@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.6.0](https://github.com/jeangiraldoo/scriptian/compare/v0.5.0...v0.6.0) (2025-04-17)
+
+
+### Features
+
+* improve release workflow ([56692d7](https://github.com/jeangiraldoo/scriptian/commit/56692d7e342c53ac39d8d4752ee7232403228bbc))
+* new try ([efcd1b5](https://github.com/jeangiraldoo/scriptian/commit/efcd1b5ef8887b6f2e603e187ed9ec9fd2e3e452))
+
 ## [0.5.0](https://github.com/jeangiraldoo/scriptian/compare/v0.4.0...v0.5.0) (2025-04-15)
 
 
