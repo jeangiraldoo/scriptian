@@ -30,6 +30,10 @@ jobs:
           toolchain: stable
           override: true
 
+      - name: Install zip (Windows only)
+        if: ${{ matrix.os == 'windows-latest' }}
+        run: choco install zip -y
+
       - name: Compile binary
         run: |
           cargo build --release
