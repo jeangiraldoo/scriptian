@@ -19,6 +19,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     env:
       BIN_NAME: script
+      APP_NAME: scriptian
     steps:
       - uses: actions/checkout@v4
 
@@ -33,21 +34,32 @@ jobs:
         run: |
           cargo build --release
 
-      - name: Rename binary
+      - name: Package the binary
         shell: bash
         run: |
-          EXT=""
-          if [[ ${{ matrix.os }} == "Windows" ]]; then
-            EXT=".exe"
-          fi
+          EXT=$([[ ${{ matrix.os }} == "Windows" ]] && printf ".exe" || printf "")
 
           mkdir -p dist
-          cp target/release/${{ env.BIN_NAME }}$EXT dist/${{ env.BIN_NAME }}-${{ runner.os }}$EXT
+          zip -j dist/${{ env.BIN_NAME }}-${{ matrix.os }}.zip \
+                 README.md \
+                 LICENSE \
+                 target/release/${{ env.BIN_NAME }}$EXT
+
+      # - name: Rename binary
+      #   shell: bash
+      #   run: |
+      #     EXT=""
+      #     if [[ ${{ matrix.os }} == "Windows" ]]; then
+      #       EXT=".exe"
+      #     fi
+      #
+      #     mkdir -p dist
+      #     cp target/release/${{ env.BIN_NAME }}$EXT dist/${{ env.BIN_NAME }}-${{ runner.os }}$EXT
 
       - name: Upload binary
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ matrix.os }}-binary
+          name: ${{ matrix.os }}-package
           path: dist/
 
   release:
@@ -75,4 +87,5 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           find dist -type f
-          gh release upload ${{ steps.release-please.outputs.tag_name }} dist/*/* --clobber
+
+          find dist -name "*.zip" -exec gh release upload ${{ steps.release-please.outputs.tag_name }} {} --clobber \;
