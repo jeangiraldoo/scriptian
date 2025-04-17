@@ -1,5 +1,22 @@
 # Changelog
 
+## [0.8.0](https://github.com/jeangiraldoo/scriptian/compare/v0.7.0...v0.8.0) (2025-04-17)
+
+
+### Features
+
+* bla ([de8a47d](https://github.com/jeangiraldoo/scriptian/commit/de8a47dd7f713e8ec9e63e187f6c50a4db0fd805))
+* fix ([f37c2ab](https://github.com/jeangiraldoo/scriptian/commit/f37c2ab2f8672d1f18899fddf8c60ff02788e3d8))
+* fix ([f839fe3](https://github.com/jeangiraldoo/scriptian/commit/f839fe3d8f0cc3ee44bcc0fe078cb2c329f6e1f8))
+* fix 2 ([7bc6eb3](https://github.com/jeangiraldoo/scriptian/commit/7bc6eb3209caab19338ddd5aff9aedd722f8caa7))
+* fix 3 ([c870f53](https://github.com/jeangiraldoo/scriptian/commit/c870f53806eeaa80631ab12a723cf06129b40df8))
+* improve ([e878cd2](https://github.com/jeangiraldoo/scriptian/commit/e878cd21a0f22b39eb146c9bf42242dabe6df67b))
+* lala ([0b19f7f](https://github.com/jeangiraldoo/scriptian/commit/0b19f7fb542e435dd571cf588a7b3afe7f8128fa))
+* lol ([db39d3a](https://github.com/jeangiraldoo/scriptian/commit/db39d3adb2e2976212f1dcf926d2c5ed88149e11))
+* tom ([c32e658](https://github.com/jeangiraldoo/scriptian/commit/c32e6586947e2cb58f6bb2a98269b693ea73439d))
+* try ([7479c41](https://github.com/jeangiraldoo/scriptian/commit/7479c4126f5ffaeb075aa6f51645ac7b151c4af9))
+* update ([3a46427](https://github.com/jeangiraldoo/scriptian/commit/3a46427edb8ec348913d13eb44f0f0d11be1dbec))
+
 ## [0.7.0](https://github.com/jeangiraldoo/scriptian/compare/v0.6.0...v0.7.0) (2025-04-17)
 
 
