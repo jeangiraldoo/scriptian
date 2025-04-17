@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.7.0](https://github.com/jeangiraldoo/scriptian/compare/v0.6.0...v0.7.0) (2025-04-17)
+
+
+### Features
+
+* ultimate ([4dcc527](https://github.com/jeangiraldoo/scriptian/commit/4dcc5271cfdf0f8e64a0ff64fee76c126da4785c))
+
 ## [0.6.0](https://github.com/jeangiraldoo/scriptian/compare/v0.5.0...v0.6.0) (2025-04-17)
 
 
