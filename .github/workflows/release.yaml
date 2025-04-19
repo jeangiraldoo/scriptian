@@ -29,7 +29,7 @@ jobs:
         run: |
           echo "release_created: ${{ steps.release-please.outputs.release_created }}"
           echo "tag_name: ${{ steps.release-please.outputs.tag_name }}"
-
+          
       - name: Set job outputs
         if: steps.release-please.outputs.release_created == 'true'
         id: set-outputs
