@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.10.0](https://github.com/jeangiraldoo/scriptian/compare/v0.9.0...v0.10.0) (2025-04-19)
+
+
+### Features
+
+* add commitlint ([925e197](https://github.com/jeangiraldoo/scriptian/commit/925e19751163930cab4bf86d20ecfee9522a6695))
+* commitlint2 ([ac77347](https://github.com/jeangiraldoo/scriptian/commit/ac773478faf8c85d280a4ce1df80669ac93d3c35))
+* new try ([04bdc6a](https://github.com/jeangiraldoo/scriptian/commit/04bdc6ab8341f250cbb5d85dc673fbee849e81ee))
+
 ## [0.9.0](https://github.com/jeangiraldoo/scriptian/compare/v0.8.0...v0.9.0) (2025-04-17)
 
 
