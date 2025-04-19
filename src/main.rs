@@ -15,5 +15,5 @@ enum Commands {
 }
 
 fn main() {
-    let _cli = Cli::parse();
+    let _clii = Cli::parse();
 }
