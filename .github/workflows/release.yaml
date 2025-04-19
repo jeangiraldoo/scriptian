@@ -101,24 +101,24 @@ jobs:
           name: ${{ matrix.os }}-${{ matrix.target }}-package
           path: dist/
 
-    release:
-      name: Create release
-      needs: [compile-binaries, generate]
-      runs-on: ubuntu-latest
-      if: ${{ needs.generate.outputs.release_created == 'true' }}
-      steps:
-        - uses: actions/checkout@v4
+  release:
+    name: Create release
+    needs: [compile-binaries, generate]
+    runs-on: ubuntu-latest
+    if: ${{ needs.generate.outputs.release_created == 'true' }}
+    steps:
+      - uses: actions/checkout@v4
 
-        - name: Download binaries
-          uses: actions/download-artifact@v4
-          with:
-            path: dist/
+      - name: Download binaries
+        uses: actions/download-artifact@v4
+        with:
+          path: dist/
 
-        - name: Upload Release Artifact
-          if: ${{ needs.generate.outputs.release_created == 'true' }}
-          env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          run: |
-            find dist -type f
+      - name: Upload Release Artifact
+        if: ${{ needs.generate.outputs.release_created == 'true' }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          find dist -type f
 
-            find dist -name "*.zip" -exec gh release upload ${{ needs.generate.outputs.tag_name }} {} --clobber \;
+          find dist -name "*.zip" -exec gh release upload ${{ needs.generate.outputs.tag_name }} {} --clobber \;
