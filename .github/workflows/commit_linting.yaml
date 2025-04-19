@@ -22,11 +22,12 @@ jobs:
           FROM_SHA=""
           TO_SHA="${{ github.sha }}"
 
-          if [[ ${{ github.event_name }} == "pull_request" ]]; then
+          if [[ "$GITHUB_EVENT_NAME" == "pull_request" ]]; then
             FROM_SHA="${{ github.event.pull_request.base.sha }}"
             TO_SHA="${{ github.event.pull_request.head.sha }}"
           else
             FROM_SHA="${{ github.event.before }}"
+            TO_SHA="${GITHUB_SHA}"
           fi
 
           echo "Linting commits from $FROM_SHA to $TO_SHA"
