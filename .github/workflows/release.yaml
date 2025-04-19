@@ -1,19 +1,14 @@
 name: Automated release
 
 on:
-  workflow_run:
-    workflows: [Code quality checks]
-    types:
-      - completed
-
-  # push:
-  #   branches:
-  #     - main
-  #   tags:
-  #     - "v*"
-  # pull_request:
-  #   branches:
-  #     - main
+  push:
+    branches:
+      - main
+    tags:
+      - "v*"
+  pull_request:
+    branches:
+      - main
 
 permissions:
   contents: write
