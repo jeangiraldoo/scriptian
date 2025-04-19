@@ -17,6 +17,7 @@ permissions:
 jobs:
   generate:
     name: Release-please
+    runs-on: ubuntu-latest
     steps:
       - name: Run Release Please
         id: release-please
