@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.13.0](https://github.com/jeangiraldoo/scriptian/compare/v0.12.0...v0.13.0) (2025-04-19)
+
+
+### Features
+
+* loma ([5674ea4](https://github.com/jeangiraldoo/scriptian/commit/5674ea40785f302cbcb43f29ec904975b7d690de))
+
 ## [0.12.0](https://github.com/jeangiraldoo/scriptian/compare/v0.11.0...v0.12.0) (2025-04-19)
 
 
