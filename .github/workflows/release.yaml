@@ -15,7 +15,18 @@ permissions:
   pull-requests: write
 
 jobs:
+  generate:
+    name: Release-please
+    steps:
+      - name: Run Release Please
+        id: release-please
+        uses: googleapis/release-please-action@v4
+        with:
+          token: ${{ secrets.RELEASE_PLEASE_SECRET }}
+          release-type: rust
+
   compile-binaries:
+    if: ${{ steps.release-please.outputs.release_created }}
     defaults:
       run:
         shell: bash
@@ -89,30 +100,30 @@ jobs:
           name: ${{ matrix.os }}-${{ matrix.target }}-package
           path: dist/
 
-  release:
-    name: Create release
-    needs: compile-binaries
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
+    release:
+      name: Create release
+      needs: compile-binaries
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v4
 
-      - name: Download binaries
-        uses: actions/download-artifact@v4
-        with:
-          path: dist/
+        - name: Download binaries
+          uses: actions/download-artifact@v4
+          with:
+            path: dist/
 
-      - name: Run Release Please
-        id: release-please
-        uses: googleapis/release-please-action@v4
-        with:
-          token: ${{ secrets.RELEASE_PLEASE_SECRET }}
-          release-type: rust
+        - name: Run Release Please
+          id: release-please
+          uses: googleapis/release-please-action@v4
+          with:
+            token: ${{ secrets.RELEASE_PLEASE_SECRET }}
+            release-type: rust
 
-      - name: Upload Release Artifact
-        if: ${{ steps.release-please.outputs.release_created }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          find dist -type f
+        - name: Upload Release Artifact
+          if: ${{ steps.release-please.outputs.release_created }}
+          env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          run: |
+            find dist -type f
 
-          find dist -name "*.zip" -exec gh release upload ${{ steps.release-please.outputs.tag_name }} {} --clobber \;
+            find dist -name "*.zip" -exec gh release upload ${{ steps.release-please.outputs.tag_name }} {} --clobber \;
