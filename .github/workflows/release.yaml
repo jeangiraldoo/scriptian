@@ -2,7 +2,7 @@ name: Automated release
 
 on:
   workflow_run:
-    workflows: [Code quality check]
+    workflows: [Code quality checks]
     types:
       - completed
 
