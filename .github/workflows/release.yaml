@@ -25,6 +25,13 @@ jobs:
           token: ${{ secrets.RELEASE_PLEASE_SECRET }}
           release-type: rust
 
+      - name: Set job outputs
+        if: steps.release-please.outputs.release_created == 'true'
+        id: set-outputs
+        run: |
+          echo "release_created=${{ steps.release-please.outputs.release_created }}" >> $GITHUB_OUTPUT
+          echo "tag_name=${{ steps.release-please.outputs.tag_name }}" >> $GITHUB_OUTPUT
+
   compile-binaries:
     needs: generate
     if: ${{ needs.generate.outputs.release_created == 'true'}}
