@@ -14,6 +14,9 @@ jobs:
   generate:
     name: Release-please
     runs-on: ubuntu-latest
+    outputs:
+      release_created: ${{ steps.release-please.outputs.release_created }}
+      tag_name: ${{ steps.release-please.outputs.tag_name }}
     steps:
       - name: Run Release Please
         id: release-please
@@ -23,7 +26,8 @@ jobs:
           release-type: rust
 
   compile-binaries:
-    if: ${{ steps.release-please.outputs.release_created }}
+    needs: generate
+    if: ${{ needs.generate.outputs.release_created == 'true'}}
     defaults:
       run:
         shell: bash
@@ -99,8 +103,9 @@ jobs:
 
     release:
       name: Create release
-      needs: compile-binaries
+      needs: [compile-binaries, generate]
       runs-on: ubuntu-latest
+      if: ${{ needs.generate.outputs.release_created == 'true' }}
       steps:
         - uses: actions/checkout@v4
 
@@ -109,18 +114,11 @@ jobs:
           with:
             path: dist/
 
-        - name: Run Release Please
-          id: release-please
-          uses: googleapis/release-please-action@v4
-          with:
-            token: ${{ secrets.RELEASE_PLEASE_SECRET }}
-            release-type: rust
-
         - name: Upload Release Artifact
-          if: ${{ steps.release-please.outputs.release_created }}
+          if: ${{ needs.generate.outputs.release_created == 'true' }}
           env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           run: |
             find dist -type f
 
-            find dist -name "*.zip" -exec gh release upload ${{ steps.release-please.outputs.tag_name }} {} --clobber \;
+            find dist -name "*.zip" -exec gh release upload ${{ needs.generate.outputs.tag_name }} {} --clobber \;
