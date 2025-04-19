@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.11.0](https://github.com/jeangiraldoo/scriptian/compare/v0.10.0...v0.11.0) (2025-04-19)
+
+
+### Features
+
+* improve release ([3f580d8](https://github.com/jeangiraldoo/scriptian/commit/3f580d8c357fbb409c778b027fcc264d7c50253d))
+* new ([efa1184](https://github.com/jeangiraldoo/scriptian/commit/efa11848279af16a272407e508224ab2fb27f273))
+* sighs ([7dbf415](https://github.com/jeangiraldoo/scriptian/commit/7dbf41570d23434a8b06724042a1ff4cc5b86112))
+* try ([4762679](https://github.com/jeangiraldoo/scriptian/commit/4762679e7624b36e115b029b71fe0ff8ef2e309b))
+
 ## [0.10.0](https://github.com/jeangiraldoo/scriptian/compare/v0.9.0...v0.10.0) (2025-04-19)
 
 
