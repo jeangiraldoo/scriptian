@@ -29,17 +29,16 @@ jobs:
         run: |
           echo "release_created: ${{ steps.release-please.outputs.release_created }}"
           echo "tag_name: ${{ steps.release-please.outputs.tag_name }}"
-          
+
       - name: Set job outputs
-        if: steps.release-please.outputs.release_created == 'true'
         id: set-outputs
         run: |
-          echo "release_created=${{ steps.release-please.outputs.release_created }}" >> $GITHUB_OUTPUT
-          echo "tag_name=${{ steps.release-please.outputs.tag_name }}" >> $GITHUB_OUTPUT
+          echo "release_created=${{ steps.release-please.outputs.release_created }}" >> "$GITHUB_OUTPUT"
+          echo "tag_name=${{ steps.release-please.outputs.tag_name }}" >> "$GITHUB_OUTPUT"
 
   compile-binaries:
     needs: generate
-    if: ${{ needs.generate.outputs.release_created == 'true'}}
+    if: ${{ needs.generate.outputs.release_created }}
     defaults:
       run:
         shell: bash
@@ -113,11 +112,11 @@ jobs:
           name: ${{ matrix.os }}-${{ matrix.target }}-package
           path: dist/
 
-  release:
-    name: Create release
+  update-release:
+    name: Update release
     needs: [compile-binaries, generate]
     runs-on: ubuntu-latest
-    if: ${{ needs.generate.outputs.release_created == 'true' }}
+    if: ${{ needs.generate.outputs.release_created }}
     steps:
       - uses: actions/checkout@v4
 
@@ -127,11 +126,9 @@ jobs:
           path: dist/
 
       - name: Upload Release Artifact
-        if: ${{ needs.generate.outputs.release_created == 'true' }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           find dist -type f
 
           find dist -name "*.zip" -exec gh release upload ${{ needs.generate.outputs.tag_name }} {} --clobber \;
-
