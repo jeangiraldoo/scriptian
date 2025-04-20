@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.14.0](https://github.com/jeangiraldoo/scriptian/compare/v0.13.0...v0.14.0) (2025-04-20)
+
+
+### Features
+
+* lal ([46abfca](https://github.com/jeangiraldoo/scriptian/commit/46abfcad12cbf3df8b74b00aad40ec910457763a))
+
 ## [0.13.0](https://github.com/jeangiraldoo/scriptian/compare/v0.12.0...v0.13.0) (2025-04-19)
 
 
