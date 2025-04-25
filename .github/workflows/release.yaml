@@ -163,6 +163,7 @@ jobs:
 
       - name: Add shasum.txt
         env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TAG_NAME: ${{ needs.generate.outputs.tag_name }}
           CHECKSUMS: ${{ steps.sha256.outputs.checksums }}
         run: |
