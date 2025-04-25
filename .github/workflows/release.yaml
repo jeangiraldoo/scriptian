@@ -146,7 +146,8 @@ jobs:
 
           # CHECKSUMS=$(find . -name "*.zip" -exec sha256sum {} \; | awk '{print $1, $(NF) | "xargs -n 1 basename"}')
 
-          CHECKSUMS=$(find . -name "*.zip" -exec sha256sum {} \; | awk '{print $1, $(NF) | "xargs -n 1 basename"}' | awk '{print $2, $1}')
+
+          CHECKSUMS=$(find . -name "*.zip" -exec sha256sum {} \; | awk '{print $1, substr($0, index($0,$2))}')
           echo "checksums<<EOF" >> $GITHUB_OUTPUT
           echo "$CHECKSUMS" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
