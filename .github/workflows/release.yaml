@@ -116,6 +116,10 @@ jobs:
     needs: [compile-code, generate]
     runs-on: ubuntu-latest
     if: ${{ needs.generate.outputs.release_created }}
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      TAG_NAME: ${{ needs.generate.outputs.tag_name }}
+      CHECKSUMS: ${{ steps.sha256.outputs.checksums }}
     steps:
       - uses: actions/checkout@v4
 
@@ -128,8 +132,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          find dist -type f
-
           find dist -name "*.zip" -exec gh release upload ${{ needs.generate.outputs.tag_name }} {} --clobber \;
 
       - name: Generate checksums
@@ -141,11 +143,13 @@ jobs:
           echo "$CHECKSUMS" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
 
+          echo "CHECKSUMS<<EOF" >> $GITHUB_ENV
+          echo "$CHECKSUMS" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+
       - name: Append checksums to release notes
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          TAG_NAME: ${{ needs.generate.outputs.tag_name }}
-          CHECKSUMS: ${{ steps.sha256.outputs.checksums }}
+        # env:
+        # CHECKSUMS: ${{ steps.sha256.outputs.checksums }}
         run: |
           CURRENT_BODY=$(gh release view "$TAG_NAME" --repo "$GITHUB_REPOSITORY" --json body -q '.body')
 
@@ -162,10 +166,8 @@ jobs:
           gh release edit "$TAG_NAME" --repo "$GITHUB_REPOSITORY" --notes "$NEW_BODY"
 
       - name: Add shasum.txt
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          TAG_NAME: ${{ needs.generate.outputs.tag_name }}
-          CHECKSUMS: ${{ steps.sha256.outputs.checksums }}
+        # env:
+        # CHECKSUMS: ${{ steps.sha256.outputs.checksums }}
         run: |
           echo "$CHECKSUMS" >> shasum.txt
           gh release upload "$TAG_NAME" shasum.txt --clobber
