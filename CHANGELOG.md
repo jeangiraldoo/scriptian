@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.20.0](https://github.com/jeangiraldoo/scriptian/compare/v0.19.0...v0.20.0) (2025-04-25)
+
+
+### Features
+
+* fadk ([56ba037](https://github.com/jeangiraldoo/scriptian/commit/56ba037475b3416b8bd58abe02da10bea9ef4d96))
+
 ## [0.19.0](https://github.com/jeangiraldoo/scriptian/compare/v0.18.0...v0.19.0) (2025-04-25)
 
 
