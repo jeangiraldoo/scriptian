@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.10.0](https://github.com/jeangiraldoo/scriptian/compare/v0.9.0...v0.10.0) (2025-04-25)
+
+
+### Features
+
+* afk ([cd241d3](https://github.com/jeangiraldoo/scriptian/commit/cd241d38795115bb155f87c64ef68ca2d7ef5c22))
+
 ## [0.9.0](https://github.com/jeangiraldoo/scriptian/compare/v0.8.0...v0.9.0) (2025-04-25)
 
 
