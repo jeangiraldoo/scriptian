@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.15.0](https://github.com/jeangiraldoo/scriptian/compare/v0.14.0...v0.15.0) (2025-04-25)
+
+
+### Features
+
+* fka ([0f954e5](https://github.com/jeangiraldoo/scriptian/commit/0f954e59b7845fc3a4b3298334369445a79da6aa))
+
 ## [0.14.0](https://github.com/jeangiraldoo/scriptian/compare/v0.13.0...v0.14.0) (2025-04-25)
 
 
