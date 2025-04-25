@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.16.0](https://github.com/jeangiraldoo/scriptian/compare/v0.15.0...v0.16.0) (2025-04-25)
+
+
+### Features
+
+* kaf ([c82f6a9](https://github.com/jeangiraldoo/scriptian/commit/c82f6a99f88d9860097027650f9cb4124115800f))
+
 ## [0.15.0](https://github.com/jeangiraldoo/scriptian/compare/v0.14.0...v0.15.0) (2025-04-25)
 
 
