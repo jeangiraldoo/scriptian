@@ -134,20 +134,25 @@ jobs:
         with:
           path: dist/
 
+      - name: Move packages to unnested directory
+        run: |
+          mkdir -p packages
+          find dist -name "*.zip" -exec mv {} packages/ \;
+
       - name: Add release binaries
         run: |
-          find dist -name "*.zip" -exec gh release upload "$TAG_NAME" {} --clobber \;
+          find packages -name "*.zip" -exec gh release upload "$TAG_NAME" {} --clobber \;
 
       - name: Generate checksums
         id: sha256
         run: |
-          cd dist
-          # CHECKSUMS=$(find . -name "*.zip" -exec sha256sum {} \;)
+          cd packages
+          CHECKSUMS=$(find . -name "*.zip" -exec sha256sum {} \;)
 
           # CHECKSUMS=$(find . -name "*.zip" -exec sha256sum {} \; | awk '{print $1, $(NF) | "xargs -n 1 basename"}')
 
 
-          CHECKSUMS=$(find . -name "*.zip" -exec sha256sum {} \; | awk '{print $1, substr($0, index($0,$2))}')
+          # CHECKSUMS=$(find . -name "*.zip" -exec sha256sum {} \; | awk '{print $1, substr($0, index($0,$2))}')
           echo "checksums<<EOF" >> $GITHUB_OUTPUT
           echo "$CHECKSUMS" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
