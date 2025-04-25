@@ -113,7 +113,7 @@ jobs:
 
   update-release:
     name: Update release
-    needs: [compile-binaries, generate]
+    needs: [compile-code, generate]
     runs-on: ubuntu-latest
     if: ${{ needs.generate.outputs.release_created }}
     steps:
