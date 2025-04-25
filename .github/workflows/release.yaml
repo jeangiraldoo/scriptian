@@ -142,7 +142,7 @@ jobs:
         id: sha256
         run: |
           cd dist
-          CHECKSUMS=$(find . -name "*.zip" -exec sha256sum {} \;)
+          CHECKSUMS=$(find dist -name "*.zip" -exec sha256sum {} \;)
           echo "checksums<<EOF" >> $GITHUB_OUTPUT
           echo "$CHECKSUMS" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
