@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.13.0](https://github.com/jeangiraldoo/scriptian/compare/v0.12.0...v0.13.0) (2025-04-25)
+
+
+### Features
+
+* rkr ([b03b786](https://github.com/jeangiraldoo/scriptian/commit/b03b786e65fa676caae8fbbbe31f7a5182dc6217))
+
 ## [0.12.0](https://github.com/jeangiraldoo/scriptian/compare/v0.11.0...v0.12.0) (2025-04-25)
 
 
