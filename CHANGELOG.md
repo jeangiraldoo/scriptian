@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.18.0](https://github.com/jeangiraldoo/scriptian/compare/v0.17.0...v0.18.0) (2025-04-25)
+
+
+### Features
+
+* kfadsasdk ([f407ee7](https://github.com/jeangiraldoo/scriptian/commit/f407ee737372d6b1d7566f086e36b697d3c91858))
+
 ## [0.17.0](https://github.com/jeangiraldoo/scriptian/compare/v0.16.0...v0.17.0) (2025-04-25)
 
 
