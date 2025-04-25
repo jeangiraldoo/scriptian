@@ -147,7 +147,9 @@ jobs:
         id: sha256
         run: |
           cd packages
-          CHECKSUMS=$(find . -name "*.zip" -exec sha256sum {} \;)
+
+          CHECKSUMS=$(find . -name "*.zip" -exec sha256sum {} \; | sed 's|^\([^ ]*\)  \./\(.*\)$|\1  \2|')
+          # CHECKSUMS=$(find . -name "*.zip" -exec sha256sum {} \;)
 
           # CHECKSUMS=$(find . -name "*.zip" -exec sha256sum {} \; | awk '{print $1, $(NF) | "xargs -n 1 basename"}')
 
