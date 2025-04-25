@@ -104,9 +104,8 @@ jobs:
           mkdir -p dist
 
           if [[ "$OS" == "windows-latest" ]]; then
-            powershell -Command "Compress-Archive `
-              -Path 'README.md', 'LICENSE', 'target/release/$BIN_NAME$EXT' `
-              -DestinationPath 'dist/$APP_NAME-$ARCH.zip'"
+            powershell -Command "Compress-Archive -Path 'README.md','LICENSE','target/release/$BIN_NAME$EXT' -DestinationPath 'dist/$APP_NAME-$ARCH.zip'"
+else
           else
             zip -j dist/$APP_NAME-$ARCH.zip \
               README.md \
