@@ -168,4 +168,4 @@ jobs:
           CHECKSUMS: ${{ steps.sha256.outputs.checksums }}
         run: |
           echo "$CHECKSUMS" >> shasum.txt
-          gh release upload "$TAG_NAME" shasum.txt --clobber \;
+          gh release upload "$TAG_NAME" shasum.txt --clobber
