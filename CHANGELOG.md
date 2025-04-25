@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.0](https://github.com/jeangiraldoo/scriptian/compare/v0.4.0...v0.5.0) (2025-04-25)
+
+
+### Features
+
+* fasdk ([e37a743](https://github.com/jeangiraldoo/scriptian/commit/e37a7439d37ff24ce3066efbca1a037f35a01ff8))
+
 ## [0.4.0](https://github.com/jeangiraldoo/scriptian/compare/v0.3.0...v0.4.0) (2025-04-25)
 
 
