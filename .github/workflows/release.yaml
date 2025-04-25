@@ -58,15 +58,17 @@ jobs:
     env:
       BIN_NAME: script
       APP_NAME: scriptian
+      OS: ${{ matrix.os }}
+      ARCHITECTURE: ${{ matrix.target }}
     steps:
       - uses: actions/checkout@v4
 
       - name: Install zip (Windows only)
-        if: ${{ matrix.os == 'windows-latest' }}
+        if: ${{ env.OS == 'windows-latest' }}
         run: choco install zip -y
 
       - name: Install Rust
-        if: ${{ matrix.os != 'windows-latest' }}
+        if: ${{ env.OS != 'windows-latest' }}
         uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
@@ -74,23 +76,23 @@ jobs:
 
       - name: Add target for cross-compilation
         run: |
-          rustup target add ${{ matrix.target }}
+          rustup target add $ARCHITECTURE
 
       - name: Compile binary
         run: |
-          if [[ ${{ matrix.os }} == "windows-latest" ]]; then
+          if [[ "$OS" == "windows-latest" ]]; then
             cargo build --release
           else
             cargo install cross
-            cross build --release --target ${{ matrix.target }}
+            cross build --release --target $ARCHITECTURE
           fi
 
       - name: Package the binary
         run: |
-          EXT=$([[ ${{ matrix.os }} == "windows-latest" ]] && printf ".exe" || printf "")
+          EXT=$([[ "$OS" == "windows-latest" ]] && printf ".exe" || printf "")
           ARCH=""
 
-          case "${{ matrix.target }}" in
+          case "$ARCHITECTURE" in
             x86_64-unknown-linux-gnu)    ARCH="linux-x64" ;;
             aarch64-unknown-linux-gnu)   ARCH="linux-arm64" ;;
             x86_64-pc-windows-gnu)      ARCH="windows-x64" ;;
@@ -100,15 +102,15 @@ jobs:
           esac
 
           mkdir -p dist
-          zip -j dist/${{ env.APP_NAME }}-$ARCH.zip \
+          zip -j dist/$APP_NAME-$ARCH.zip \
                  README.md \
                  LICENSE \
-                 target/release/${{ env.BIN_NAME }}$EXT
+                 target/release/$BIN_NAME$EXT
 
       - name: Upload binary
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ matrix.os }}-${{ matrix.target }}-package
+          name: ${{ env.OS }}-${{ env.ARCHITECTURE }}-package
           path: dist/
 
   update-release:
@@ -128,10 +130,8 @@ jobs:
           path: dist/
 
       - name: Add release binaries
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          find dist -name "*.zip" -exec gh release upload ${{ needs.generate.outputs.tag_name }} {} --clobber \;
+          find dist -name "*.zip" -exec gh release upload "$TAG_NAME" {} --clobber \;
 
       - name: Generate checksums
         id: sha256
@@ -147,8 +147,6 @@ jobs:
           echo "EOF" >> $GITHUB_ENV
 
       - name: Append checksums to release notes
-        # env:
-        # CHECKSUMS: ${{ steps.sha256.outputs.checksums }}
         run: |
           CURRENT_BODY=$(gh release view "$TAG_NAME" --repo "$GITHUB_REPOSITORY" --json body -q '.body')
 
@@ -165,8 +163,6 @@ jobs:
           gh release edit "$TAG_NAME" --repo "$GITHUB_REPOSITORY" --notes "$NEW_BODY"
 
       - name: Add shasum.txt
-        # env:
-        # CHECKSUMS: ${{ steps.sha256.outputs.checksums }}
         run: |
           echo "$CHECKSUMS" >> shasum.txt
           gh release upload "$TAG_NAME" shasum.txt --clobber
