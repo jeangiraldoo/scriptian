@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.7.0](https://github.com/jeangiraldoo/scriptian/compare/v0.6.0...v0.7.0) (2025-04-25)
+
+
+### Features
+
+* afkd ([290c7c0](https://github.com/jeangiraldoo/scriptian/commit/290c7c043e09cdde4976f097b0cf54d7e4b5f690))
+* fak ([a3b9fbd](https://github.com/jeangiraldoo/scriptian/commit/a3b9fbda864f789924b3a2c552666fce70b65c24))
+
 ## [0.6.0](https://github.com/jeangiraldoo/scriptian/compare/v0.5.0...v0.6.0) (2025-04-25)
 
 
