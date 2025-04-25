@@ -63,9 +63,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install zip (Windows only)
-        if: ${{ env.OS == 'windows-latest' }}
-        run: choco install zip -y
+      # - name: Install zip (Windows only)
+      #   if: ${{ env.OS == 'windows-latest' }}
+      #   run: choco install zip -y
 
       - name: Install Rust
         if: ${{ env.OS != 'windows-latest' }}
@@ -102,10 +102,17 @@ jobs:
           esac
 
           mkdir -p dist
-          zip -j dist/$APP_NAME-$ARCH.zip \
-                 README.md \
-                 LICENSE \
-                 target/release/$BIN_NAME$EXT
+
+          if [[ "$OS" == "windows-latest" ]]; then
+            powershell Compress-Archive `
+              -Path README.md, LICENSE, target/release/$BIN_NAME$EXT `
+              -DestinationPath dist/$APP_NAME-$ARCH.zip
+          else
+            zip -j dist/$APP_NAME-$ARCH.zip \
+              README.md \
+              LICENSE \
+              target/release/$BIN_NAME$EXT
+          fi
 
       - name: Upload binary
         uses: actions/upload-artifact@v4
