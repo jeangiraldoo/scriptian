@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.0](https://github.com/jeangiraldoo/scriptian/compare/v0.1.0...v0.2.0) (2025-04-25)
+
+
+### Features
+
+* fak ([69569a3](https://github.com/jeangiraldoo/scriptian/commit/69569a32afed55e07b8ede04366ce8511663b9a5))
+
 ## 0.1.0 (2025-04-25)
 
 
