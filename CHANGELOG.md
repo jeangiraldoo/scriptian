@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.17.0](https://github.com/jeangiraldoo/scriptian/compare/v0.16.0...v0.17.0) (2025-04-25)
+
+
+### Features
+
+* t haf ([dc1ea7c](https://github.com/jeangiraldoo/scriptian/commit/dc1ea7c100870b046bf4ea4167e9cff5570a346d))
+
 ## [0.16.0](https://github.com/jeangiraldoo/scriptian/compare/v0.15.0...v0.16.0) (2025-04-25)
 
 
