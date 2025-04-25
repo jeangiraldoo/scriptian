@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.14.0](https://github.com/jeangiraldoo/scriptian/compare/v0.13.0...v0.14.0) (2025-04-25)
+
+
+### Features
+
+* fkas ([74873ad](https://github.com/jeangiraldoo/scriptian/commit/74873ad0a63f8b3fc0ecef8735f6d4dbee1a2bcb))
+
 ## [0.13.0](https://github.com/jeangiraldoo/scriptian/compare/v0.12.0...v0.13.0) (2025-04-25)
 
 
