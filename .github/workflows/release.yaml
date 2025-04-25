@@ -149,6 +149,6 @@ jobs:
         run: |
           CURRENT_BODY=$(gh release view "$TAG_NAME" --repo "$GITHUB_REPOSITORY" --json body -q '.body')
 
-          NEW_BODY="$CURRENT_BODY"$'\n\n'"## Checksums"$'\n'"\`\`\`"$'\n'"$CHECKSUMS"$'\n'"```"
+          NEW_BODY="${CURRENT_BODY}"$'\n\n'"## Checksums"$'\n'"```"$'\n'"${CHECKSUMS}"$'\n'"```"
 
           gh release edit "$TAG_NAME" --repo "$GITHUB_REPOSITORY" --notes "$NEW_BODY"
