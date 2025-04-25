@@ -152,6 +152,7 @@ jobs:
           NEW_BODY=$(cat <<EOF
           ${CURRENT_BODY}
 
+          ## SHA256 Checksums
           \`\`\`
           ${CHECKSUMS}
           \`\`\`
@@ -159,3 +160,11 @@ jobs:
           )
 
           gh release edit "$TAG_NAME" --repo "$GITHUB_REPOSITORY" --notes "$NEW_BODY"
+
+      - name: Add shasum.txt
+        env:
+          TAG_NAME: ${{ needs.generate.outputs.tag_name }}
+          CHECKSUMS: ${{ steps.sha256.outputs.checksums }}
+        run: |
+          echo "$CHECKSUMS" >> shasum.txt
+          gh release upload "$TAG_NAME" shasum.txt --clobber \;
