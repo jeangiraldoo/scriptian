@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.0 (2025-04-25)
+
+
+### Features
+
+* af ([74abd6a](https://github.com/jeangiraldoo/scriptian/commit/74abd6a37c32c33c8f91a74cc184126e4cd01daa))
+* initial ([f130212](https://github.com/jeangiraldoo/scriptian/commit/f130212040d5075167299b7fcbd395a76662eaf1))
+
 ## [0.13.0](https://github.com/jeangiraldoo/scriptian/compare/v0.12.0...v0.13.0) (2025-04-19)
 
 
