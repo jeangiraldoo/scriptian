@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.11.0](https://github.com/jeangiraldoo/scriptian/compare/v0.10.0...v0.11.0) (2025-04-25)
+
+
+### Features
+
+* afdksk ([32876c7](https://github.com/jeangiraldoo/scriptian/commit/32876c7d997da46cc757b7e9f12871fde835d9d5))
+* akfds ([e9336cd](https://github.com/jeangiraldoo/scriptian/commit/e9336cd117b8d8830b18f1bd4143b796c426ec3c))
+
 ## [0.10.0](https://github.com/jeangiraldoo/scriptian/compare/v0.9.0...v0.10.0) (2025-04-25)
 
 
