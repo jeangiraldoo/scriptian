@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.21.0](https://github.com/jeangiraldoo/scriptian/compare/v0.20.0...v0.21.0) (2025-06-16)
+
+
+### Features
+
+* falkds ([ea06809](https://github.com/jeangiraldoo/scriptian/commit/ea06809fe10d2c8a96574aeff8e561a384450b7e))
+
 ## [0.20.0](https://github.com/jeangiraldoo/scriptian/compare/v0.19.0...v0.20.0) (2025-04-25)
 
 
