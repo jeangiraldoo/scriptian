@@ -1,4 +1,4 @@
-name: Automated release
+name: Create github release
 
 on:
   push:
@@ -22,165 +22,179 @@ jobs:
         uses: googleapis/release-please-action@v4
         with:
           token: ${{ secrets.RELEASE_PLEASE_SECRET }}
-          release-type: rust
-
-      - name: Debug outputs
-        run: |
-          echo "release_created: ${{ steps.release-please.outputs.release_created }}"
-          echo "tag_name: ${{ steps.release-please.outputs.tag_name }}"
-
-      - name: Set job outputs
-        id: set-outputs
-        run: |
-          echo "release_created=${{ steps.release-please.outputs.release_created }}" >> "$GITHUB_OUTPUT"
-          echo "tag_name=${{ steps.release-please.outputs.tag_name }}" >> "$GITHUB_OUTPUT"
-
-  compile-code:
-    needs: generate
-    if: ${{ needs.generate.outputs.release_created }}
-    defaults:
-      run:
-        shell: bash
-    strategy:
-      matrix:
-        include:
-          - os: ubuntu-latest
-            target: x86_64-unknown-linux-gnu
-          - os: ubuntu-latest
-            target: aarch64-unknown-linux-gnu
-          - os: windows-latest
-            target: x86_64-pc-windows-gnu
-          - os: macos-latest
-            target: x86_64-apple-darwin
-          - os: macos-latest
-            target: aarch64-apple-darwin
-    runs-on: ${{ matrix.os }}
-    env:
-      BIN_NAME: script
-      APP_NAME: scriptian
-      OS: ${{ matrix.os }}
-      ARCHITECTURE: ${{ matrix.target }}
-    steps:
-      - uses: actions/checkout@v4
-
-      # - name: Install zip (Windows only)
-      #   if: ${{ env.OS == 'windows-latest' }}
-      #   run: choco install zip -y
-
-      - name: Install Rust
-        if: ${{ env.OS != 'windows-latest' }}
-        uses: actions-rs/toolchain@v1
-        with:
-          toolchain: stable
-          override: true
-
-      - name: Add target for cross-compilation
-        run: |
-          rustup target add $ARCHITECTURE
-
-      - name: Compile binary
-        run: |
-          if [[ "$OS" == "windows-latest" ]]; then
-            cargo build --release
-          else
-            cargo install cross
-            cross build --release --target $ARCHITECTURE
-          fi
-
-      - name: Package the binary
-        run: |
-          EXT=$([[ "$OS" == "windows-latest" ]] && printf ".exe" || printf "")
-          ARCH=""
-
-          case "$ARCHITECTURE" in
-            x86_64-unknown-linux-gnu)    ARCH="linux-x64" ;;
-            aarch64-unknown-linux-gnu)   ARCH="linux-arm64" ;;
-            x86_64-pc-windows-gnu)      ARCH="windows-x64" ;;
-            x86_64-apple-darwin)         ARCH="macos-x64" ;;
-            aarch64-apple-darwin)        ARCH="macos-arm64" ;;
-            *) echo "Unknown target"; exit 1 ;;
-          esac
-
-          mkdir -p dist
-
-          if [[ "$OS" == "windows-latest" ]]; then
-            powershell -Command "Compress-Archive -Path 'README.md','LICENSE','target/release/$BIN_NAME$EXT' -DestinationPath 'dist/$APP_NAME-$ARCH.zip'"
-          else
-            zip -j dist/$APP_NAME-$ARCH.zip \
-              README.md \
-              LICENSE \
-              target/release/$BIN_NAME$EXT
-          fi
-
-      - name: Upload binary
-        uses: actions/upload-artifact@v4
-        with:
-          name: ${{ env.OS }}-${{ env.ARCHITECTURE }}-package
-          path: dist/
-
-  update-release:
-    name: Update release
-    needs: [compile-code, generate]
-    runs-on: ubuntu-latest
-    if: ${{ needs.generate.outputs.release_created }}
-    env:
-      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      TAG_NAME: ${{ needs.generate.outputs.tag_name }}
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Download binaries
-        uses: actions/download-artifact@v4
-        with:
-          path: dist/
-
-      - name: Move packages to unnested directory
-        run: |
-          mkdir -p packages
-          find dist -name "*.zip" -exec mv {} packages/ \;
-
-      - name: Add release binaries
-        run: |
-          find packages -name "*.zip" -exec gh release upload "$TAG_NAME" {} --clobber \;
-
-      - name: Generate checksums
-        id: sha256
-        run: |
-          cd packages
-
-          CHECKSUMS=$(find . -name "*.zip" -exec sha256sum {} \; | sed 's| ./| |')
-          # CHECKSUMS=$(find . -name "*.zip" -exec sha256sum {} \; | sed 's|^\([^ ]*\)  \./\(.*\)$|\1  \2|')
-          # CHECKSUMS=$(find . -name "*.zip" -exec sha256sum {} \;)
-
-          # CHECKSUMS=$(find . -name "*.zip" -exec sha256sum {} \; | awk '{print $1, $(NF) | "xargs -n 1 basename"}')
-
-
-          # CHECKSUMS=$(find . -name "*.zip" -exec sha256sum {} \; | awk '{print $1, substr($0, index($0,$2))}')
-          echo "checksums<<EOF" >> $GITHUB_OUTPUT
-          echo "$CHECKSUMS" >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
-
-          echo "CHECKSUMS<<EOF" >> $GITHUB_ENV
-          echo "$CHECKSUMS" >> $GITHUB_ENV
-          echo "EOF" >> $GITHUB_ENV
-
-      - name: Append checksums to release notes
-        run: |
-          CURRENT_BODY=$(gh release view "$TAG_NAME" --repo "$GITHUB_REPOSITORY" --json body -q '.body')
-
-          NEW_BODY=$(cat <<EOF
-          ${CURRENT_BODY}
-
-          ## SHA256 Checksums
-          \`\`\`
-          ${CHECKSUMS}
-          \`\`\`
-          EOF
-          )
-
-          gh release edit "$TAG_NAME" --repo "$GITHUB_REPOSITORY" --notes "$NEW_BODY"
-
-      - name: Add shasum.txt
-        run: |
-          echo "$CHECKSUMS" >> shasum.txt
-          gh release upload "$TAG_NAME" shasum.txt --clobber
+          release-type: simple
+# name: Create github release
+#
+# on:
+#   push:
+#     branches:
+#       - main
+#
+# permissions:
+#   contents: write
+#   pull-requests: write
+#
+# jobs:
+#   generate:
+#     name: Release-please
+#     runs-on: ubuntu-latest
+#     outputs:
+#       release_created: ${{ steps.release-please.outputs.release_created }}
+#       tag_name: ${{ steps.release-please.outputs.tag_name }}
+#     steps:
+#       - name: Run Release Please
+#         id: release-please
+#         uses: googleapis/release-please-action@v4
+#         with:
+#           token: ${{ secrets.RELEASE_PLEASE_SECRET }}
+#           release-type: rust
+#
+#       - name: Debug outputs
+#         run: |
+#           echo "release_created: ${{ steps.release-please.outputs.release_created }}"
+#           echo "tag_name: ${{ steps.release-please.outputs.tag_name }}"
+#
+#       - name: Set job outputs
+#         id: set-outputs
+#         run: |
+#           echo "release_created=${{ steps.release-please.outputs.release_created }}" >> "$GITHUB_OUTPUT"
+#           echo "tag_name=${{ steps.release-please.outputs.tag_name }}" >> "$GITHUB_OUTPUT"
+#
+#   compile-code:
+#     needs: generate
+#     if: ${{ needs.generate.outputs.release_created }}
+#     defaults:
+#       run:
+#         shell: bash
+#     strategy:
+#       matrix:
+#         include:
+#           - os: ubuntu-latest
+#             target: x86_64-unknown-linux-gnu
+#           - os: ubuntu-latest
+#             target: aarch64-unknown-linux-gnu
+#           - os: windows-latest
+#             target: x86_64-pc-windows-gnu
+#           - os: macos-latest
+#             target: x86_64-apple-darwin
+#           - os: macos-latest
+#             target: aarch64-apple-darwin
+#     runs-on: ${{ matrix.os }}
+#     env:
+#       BIN_NAME: script
+#       APP_NAME: scriptian
+#       OS: ${{ matrix.os }}
+#       ARCHITECTURE: ${{ matrix.target }}
+#     steps:
+#       - uses: actions/checkout@v4
+#
+#       - name: Install Rust
+#         if: ${{ env.OS != 'windows-latest' }}
+#         uses: actions-rs/toolchain@v1
+#         with:
+#           toolchain: stable
+#           override: true
+#
+#       - name: Add target for cross-compilation
+#         run: |
+#           rustup target add $ARCHITECTURE
+#
+#       - name: Compile binary
+#         run: |
+#           if [[ "$OS" == "windows-latest" ]]; then
+#             cargo build --release
+#           else
+#             cargo install cross
+#             cross build --release --target $ARCHITECTURE
+#           fi
+#
+#       - name: Package the binary
+#         run: |
+#           EXT=$([[ "$OS" == "windows-latest" ]] && printf ".exe" || printf "")
+#           ARCH=""
+#
+#           case "$ARCHITECTURE" in
+#             x86_64-unknown-linux-gnu)    ARCH="linux-x64" ;;
+#             aarch64-unknown-linux-gnu)   ARCH="linux-arm64" ;;
+#             x86_64-pc-windows-gnu)      ARCH="windows-x64" ;;
+#             x86_64-apple-darwin)         ARCH="macos-x64" ;;
+#             aarch64-apple-darwin)        ARCH="macos-arm64" ;;
+#             *) echo "Unknown target"; exit 1 ;;
+#           esac
+#
+#           mkdir -p dist
+#
+#           if [[ "$OS" == "windows-latest" ]]; then
+#             powershell -Command "Compress-Archive -Path 'README.md','LICENSE','target/release/$BIN_NAME$EXT' -DestinationPath 'dist/$APP_NAME-$ARCH.zip'"
+#           else
+#             zip -j dist/$APP_NAME-$ARCH.zip \
+#               README.md \
+#               LICENSE \
+#               target/release/$BIN_NAME$EXT
+#           fi
+#
+#       - name: Upload binary
+#         uses: actions/upload-artifact@v4
+#         with:
+#           name: ${{ env.OS }}-${{ env.ARCHITECTURE }}-package
+#           path: dist/
+#
+#   update-github-release:
+#     name: Update release
+#     needs: [compile-code, generate]
+#     runs-on: ubuntu-latest
+#     if: ${{ needs.generate.outputs.release_created }}
+#     env:
+#       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#       TAG_NAME: ${{ needs.generate.outputs.tag_name }}
+#     steps:
+#       - uses: actions/checkout@v4
+#
+#       - name: Download binaries
+#         uses: actions/download-artifact@v4
+#         with:
+#           path: dist/
+#
+#       - name: Move packages to unnested directory
+#         run: |
+#           mkdir -p packages
+#           find dist -name "*.zip" -exec mv {} packages/ \;
+#
+#       - name: Add release binaries
+#         run: |
+#           find packages -name "*.zip" -exec gh release upload "$TAG_NAME" {} --clobber \;
+#
+#       - name: Generate checksums
+#         id: sha256
+#         run: |
+#           cd packages
+#
+#           CHECKSUMS=$(find . -name "*.zip" -exec sha256sum {} \; | sed 's| ./| |')
+#           echo "checksums<<EOF" >> $GITHUB_OUTPUT
+#           echo "$CHECKSUMS" >> $GITHUB_OUTPUT
+#           echo "EOF" >> $GITHUB_OUTPUT
+#
+#           echo "CHECKSUMS<<EOF" >> $GITHUB_ENV
+#           echo "$CHECKSUMS" >> $GITHUB_ENV
+#           echo "EOF" >> $GITHUB_ENV
+#
+#       - name: Append checksums to release notes
+#         run: |
+#           CURRENT_BODY=$(gh release view "$TAG_NAME" --repo "$GITHUB_REPOSITORY" --json body -q '.body')
+#
+#           NEW_BODY=$(cat <<EOF
+#           ${CURRENT_BODY}
+#
+#           ## SHA256 Checksums
+#           \`\`\`
+#           ${CHECKSUMS}
+#           \`\`\`
+#           EOF
+#           )
+#
+#           gh release edit "$TAG_NAME" --repo "$GITHUB_REPOSITORY" --notes "$NEW_BODY"
+#
+#       - name: Add shasum.txt
+#         run: |
+#           echo "$CHECKSUMS" >> shasum.txt
+#           gh release upload "$TAG_NAME" shasum.txt --clobber
