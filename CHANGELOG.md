@@ -1,5 +1,37 @@
 # Changelog
 
+## [0.22.0](https://github.com/jeangiraldoo/scriptian/compare/v0.21.0...v0.22.0) (2025-06-16)
+
+
+### Features
+
+* af ([74abd6a](https://github.com/jeangiraldoo/scriptian/commit/74abd6a37c32c33c8f91a74cc184126e4cd01daa))
+* afdk ([25368b3](https://github.com/jeangiraldoo/scriptian/commit/25368b3539a8716b8cbd2b9af62d514ed8202bfe))
+* afdksk ([32876c7](https://github.com/jeangiraldoo/scriptian/commit/32876c7d997da46cc757b7e9f12871fde835d9d5))
+* afk ([cd241d3](https://github.com/jeangiraldoo/scriptian/commit/cd241d38795115bb155f87c64ef68ca2d7ef5c22))
+* afkd ([290c7c0](https://github.com/jeangiraldoo/scriptian/commit/290c7c043e09cdde4976f097b0cf54d7e4b5f690))
+* akfds ([e9336cd](https://github.com/jeangiraldoo/scriptian/commit/e9336cd117b8d8830b18f1bd4143b796c426ec3c))
+* fadk ([56ba037](https://github.com/jeangiraldoo/scriptian/commit/56ba037475b3416b8bd58abe02da10bea9ef4d96))
+* fak ([a3b9fbd](https://github.com/jeangiraldoo/scriptian/commit/a3b9fbda864f789924b3a2c552666fce70b65c24))
+* fak ([69569a3](https://github.com/jeangiraldoo/scriptian/commit/69569a32afed55e07b8ede04366ce8511663b9a5))
+* falkds ([ea06809](https://github.com/jeangiraldoo/scriptian/commit/ea06809fe10d2c8a96574aeff8e561a384450b7e))
+* fasdk ([e37a743](https://github.com/jeangiraldoo/scriptian/commit/e37a7439d37ff24ce3066efbca1a037f35a01ff8))
+* fasksfd ([7109c38](https://github.com/jeangiraldoo/scriptian/commit/7109c3835b1f5d453db82700274fb571d1d6e2d3))
+* fka ([0f954e5](https://github.com/jeangiraldoo/scriptian/commit/0f954e59b7845fc3a4b3298334369445a79da6aa))
+* fkas ([74873ad](https://github.com/jeangiraldoo/scriptian/commit/74873ad0a63f8b3fc0ecef8735f6d4dbee1a2bcb))
+* flads ([0b87b4d](https://github.com/jeangiraldoo/scriptian/commit/0b87b4d3ca93880cecb005bc845f4723e3a0126a))
+* initial ([f130212](https://github.com/jeangiraldoo/scriptian/commit/f130212040d5075167299b7fcbd395a76662eaf1))
+* kaf ([c82f6a9](https://github.com/jeangiraldoo/scriptian/commit/c82f6a99f88d9860097027650f9cb4124115800f))
+* kfadsasdk ([f407ee7](https://github.com/jeangiraldoo/scriptian/commit/f407ee737372d6b1d7566f086e36b697d3c91858))
+* lala ([f6678e4](https://github.com/jeangiraldoo/scriptian/commit/f6678e410a747c936e010b17f0e381af3a7267e6))
+* lol ([6e619e3](https://github.com/jeangiraldoo/scriptian/commit/6e619e331acc0e0a8d253a9c7307be7992adf6d2))
+* lol ([df4c391](https://github.com/jeangiraldoo/scriptian/commit/df4c391233f28b739aa2df4c0199089e1c3eff30))
+* lol ([5f14c44](https://github.com/jeangiraldoo/scriptian/commit/5f14c44c5a4515539273d66ebaf183d35de4bfb4))
+* ma ([8059207](https://github.com/jeangiraldoo/scriptian/commit/8059207da460172cce9207047d44214d7651a82b))
+* rkr ([b03b786](https://github.com/jeangiraldoo/scriptian/commit/b03b786e65fa676caae8fbbbe31f7a5182dc6217))
+* t haf ([dc1ea7c](https://github.com/jeangiraldoo/scriptian/commit/dc1ea7c100870b046bf4ea4167e9cff5570a346d))
+* test ([dbee6bb](https://github.com/jeangiraldoo/scriptian/commit/dbee6bbf57b94d10d9837df84b58fafb9c100e7e))
+
 ## [0.21.0](https://github.com/jeangiraldoo/scriptian/compare/v0.20.0...v0.21.0) (2025-06-16)
 
 
